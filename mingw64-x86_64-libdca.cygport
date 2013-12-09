@@ -1,0 +1,24 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross
+
+NAME="mingw64-x86_64-libdca"
+VERSION=0.0.5
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="DTS Coherent Acoustics streams decoder for Win64 toochain"
+DESCRIPTION="This is a free library for decoding DTS Coherent Acoustics streams."
+HOMEPAGE="http://developers.videolan.org/libdca.html"
+SRC_URI="http://download.videolan.org/pub/videolan/libdca/${VERSION}/libdca-${VERSION}.tar.bz2
+	 http://download.videolan.org/pub/videolan/libdca/${VERSION}/libdca-${VERSION}.tar.bz2.sig"
+SRC_DIR="libdca-${VERSION}"
+
+src_install() {
+	cd ${B}
+	cyginstall bin_PROGRAMS= bin_SCRIPTS= man1_MANS=
+
+	rm -fr ${D}${CROSS_DATADIR}/man/
+
+	rm -f ${D}${CROSS_LIBDIR}/libdts.a
+	dosym libdca.a ${CROSS_LIBDIR}/libdts.a
+	dosym libdca.dll.a ${CROSS_LIBDIR}/libdts.dll.a
+}
